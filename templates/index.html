@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>随手记</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>随手记</h1>
+
+        <h2>添加笔记</h2>
+        <form id="add-note-form">
+            <label for="contact">内容:</label>
+            <textarea id="contact" name="contact" required></textarea>
+            <button type="submit">添加笔记</button>
+        </form>
+        
+        <h2>查看笔记</h2>
+        <select id="notes-limit" onchange="fetchNotes()">
+            <option value="0">不显示</option>
+            <option value="5">近5条</option>
+            <option value="10">近10条</option>
+            <option value="20">近20条</option>
+            <option value="50">近50条</option>
+        </select>
+        <ul id="notes-list"></ul>
+
+        <h2>导出笔记</h2>
+        <form id="export-notes-form">
+            <label for="start-date">开始日期:</label>
+            <input type="date" id="start-date" name="start-date" required>
+            <label for="end-date">结束日期:</label>
+            <input type="date" id="end-date" name="end-date" required>
+            <button type="submit">导出CSV</button>
+        </form>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

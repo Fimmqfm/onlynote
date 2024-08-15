@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>登录</title>
+</head>
+<body>
+    <div class="container">
+        <h1>登录</h1>
+        <form method="post" action="{{ url_for('login') }}">
+            <label for="password">密码:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">登录</button>
+        </form>
+    </div>
+</body>
+</html>
