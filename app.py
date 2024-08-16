@@ -119,9 +119,13 @@ def get_notes():
     conn = get_db_connection()
     # 根据note_type是否存在构建不同的查询条件
     if note_type is None:
-        notes = conn.execute('SELECT * FROM main ORDER BY id DESC LIMIT ?', (limit,)).fetchall()
+        notes = conn.execute('''
+            SELECT * FROM main WHERE type IN (0, 1) ORDER BY id DESC LIMIT ?
+        ''', (limit,)).fetchall()
     else:
-        notes = conn.execute('SELECT * FROM main WHERE type = ? ORDER BY id DESC LIMIT ?', (note_type, limit)).fetchall()
+        notes = conn.execute('''
+            SELECT * FROM main WHERE type = ? ORDER BY id DESC LIMIT ?
+        ''', (note_type, limit)).fetchall()
     conn.close()
     return jsonify([dict(note) for note in notes])
 
@@ -172,7 +176,7 @@ def export_notes():
     if note_type is None or note_type == 'all':
         cursor.execute('''
             SELECT * FROM main
-            WHERE time BETWEEN ? AND ?
+            WHERE time BETWEEN ? AND ? AND type IN (0, 1)
             ORDER BY id DESC
         ''', (start_date, end_date))
     else:
