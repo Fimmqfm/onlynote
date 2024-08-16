@@ -44,7 +44,8 @@ def create_table():
         CREATE TABLE IF NOT EXISTS main (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             time TEXT NOT NULL,
-            contact TEXT NOT NULL
+            contact TEXT NOT NULL,
+            type INTEGER NOT NULL DEFAULT 0  -- 新增type字段，默认值为0
         )
     ''')
     conn.commit()
@@ -110,10 +111,17 @@ def get_notes():
     if not session.get('logged_in'):
         return redirect(url_for('login'))
     limit = request.args.get('limit', default=10, type=int)
+    # 获取请求中的type参数，如果不存在则默认为None
+    note_type = request.args.get('type', type=int)
+
     if limit not in [0, 5, 10, 20, 50]:
         limit = 10
     conn = get_db_connection()
-    notes = conn.execute('SELECT * FROM main ORDER BY id DESC LIMIT ?', (limit,)).fetchall()
+    # 根据note_type是否存在构建不同的查询条件
+    if note_type is None:
+        notes = conn.execute('SELECT * FROM main ORDER BY id DESC LIMIT ?', (limit,)).fetchall()
+    else:
+        notes = conn.execute('SELECT * FROM main WHERE type = ? ORDER BY id DESC LIMIT ?', (note_type, limit)).fetchall()
     conn.close()
     return jsonify([dict(note) for note in notes])
 
@@ -121,35 +129,34 @@ def get_notes():
 def add_note():
     if not session.get('logged_in'):
         return redirect(url_for('login'))
-    new_contact = request.json['contact']
+    new_contact = request.json.get('contact')
+    note_type = request.json.get('type', 0)  # 从请求中获取type字段，默认为0
     current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    
+
     conn = get_db_connection()
-    conn.execute('INSERT INTO main (time, contact) VALUES (?, ?)',
-                 (current_time, new_contact))
+    conn.execute('INSERT INTO main (time, contact, type) VALUES (?, ?, ?)',
+                 (current_time, new_contact, note_type))
     conn.commit()
     conn.close()
-    
+
     return jsonify({'message': 'Note added successfully', 'time': current_time}), 201
+
 
 @app.route('/export-notes', methods=['POST'])
 def export_notes():
     if not session.get('logged_in'):
         app.logger.warning('Unauthorized access attempt to export notes.')
         return redirect(url_for('login'))
-    
-    data = request.get_json()  # 获取JSON数据
-    if not data:
-        app.logger.error('No data provided for notes export.')
-        return jsonify({'error': 'No data provided'}), 400
-    
+
+    data = request.get_json()
     start_date = data.get('start-date')
     end_date = data.get('end-date')
-    
+    note_type = data.get('type', None)  # 使用None作为默认值来表示导出所有类型
+
     if not start_date or not end_date:
         app.logger.error('Missing start-date or end-date for notes export.')
         return jsonify({'error': 'Missing start-date or end-date'}), 400
-    
+
     try:
         datetime.strptime(start_date, '%Y-%m-%d')
         datetime.strptime(end_date, '%Y-%m-%d')
@@ -158,14 +165,23 @@ def export_notes():
         return jsonify({'error': 'Invalid date format'}), 400
 
     end_date += " 23:59:59"
-    
+
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute('''
-        SELECT * FROM main
-        WHERE time BETWEEN ? AND ?
-        ORDER BY id DESC
-    ''', (start_date, end_date))
+    # 根据note_type是否为None或all来构建查询条件
+    if note_type is None or note_type == 'all':
+        cursor.execute('''
+            SELECT * FROM main
+            WHERE time BETWEEN ? AND ?
+            ORDER BY id DESC
+        ''', (start_date, end_date))
+    else:
+        cursor.execute('''
+            SELECT * FROM main
+            WHERE time BETWEEN ? AND ? AND type = ?
+            ORDER BY id DESC
+        ''', (start_date, end_date, note_type))
+
     rows = cursor.fetchall()
     
     si = StringIO()
@@ -175,7 +191,7 @@ def export_notes():
         cw.writerow(row)  # 写入数据
     
     app.logger.info(f'Exported notes between {start_date} and {end_date}.')
-    
+
     return Response(si.getvalue(), mimetype='text/csv',
                     headers={'Content-Disposition': 'attachment; filename=notes.csv'})
 

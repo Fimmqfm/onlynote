@@ -14,13 +14,25 @@
         <form id="add-note-form">
             <label for="contact">内容:</label>
             <textarea id="contact" name="contact" required></textarea>
+            <!-- 添加一个选择类型的下拉菜单 -->
+            <label for="note-type">类型:</label>
+            <select id="note-type" name="note-type">
+                <option value="0">笔记</option>
+                <option value="1">杂物堆</option>
+            </select>
             <button type="submit">添加笔记</button>
         </form>
-        
+
         <h2>查看笔记</h2>
+        <!-- 添加一个选择显示笔记类型的下拉菜单 -->
+        <select id="notes-type" onchange="fetchNotes()">
+            <option value="0">笔记</option>
+            <option value="1">杂物堆</option>
+            <option value="all">笔记和杂物堆</option>
+        </select>
         <select id="notes-limit" onchange="fetchNotes()">
             <option value="0">不显示</option>
-            <option value="5">近5条</option>
+            <option value="5" selected>近5条</option>
             <option value="10">近10条</option>
             <option value="20">近20条</option>
             <option value="50">近50条</option>
@@ -33,6 +45,13 @@
             <input type="date" id="start-date" name="start-date" required>
             <label for="end-date">结束日期:</label>
             <input type="date" id="end-date" name="end-date" required>
+            <!-- 添加一个选择导出笔记类型的下拉菜单 -->
+            <label for="export-type">类型:</label>
+            <select id="export-type" name="export-type">
+                <option value="0">笔记</option>
+                <option value="1">杂物堆</option>
+                <option value="all">笔记和杂物堆</option>
+            </select>
             <button type="submit">导出CSV</button>
         </form>
     </div>
