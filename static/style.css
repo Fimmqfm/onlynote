@@ -18,12 +18,35 @@ body {
 h1 {
     text-align: center;
     color: #333;
+    font-size: 2.5em; /* 增加字体大小 */
+    line-height: 1.2; /* 调整行高 */
+    margin-bottom: 20px; /* 添加底部外边距 */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* 添加文本阴影 */
 }
 
 h2 {
     color: #333;
-    border-bottom: 1px solid #ddd;
+    font-size: 2em; /* 增加字体大小 */
+    line-height: 1.3; /* 调整行高 */
+    border-bottom: 2px solid #ddd; /* 增加底边框的宽度 */
     padding-bottom: 10px;
+    margin-bottom: 20px; /* 添加底部外边距 */
+}
+
+/* 媒体查询，针对不同屏幕尺寸调整标题样式 */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2em; /* 在中等屏幕尺寸减小字体大小 */
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.5em; /* 在小屏幕尺寸进一步减小字体大小 */
+    }
+    h2 {
+        font-size: 1.25em; /* 在小屏幕尺寸减小字体大小 */
+    }
 }
 
 form {
@@ -32,42 +55,110 @@ form {
 
 textarea {
     width: 100%;
-    height: 100px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    height: 200px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 0px; /* 增加内边距 */
+    border: 1px solid #ddd; /* 设置边框样式 */
+    border-radius: 5px; /* 添加圆角边框 */
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1); /* 添加内阴影 */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* 添加过渡效果 */
     resize: vertical; /* 允许垂直方向调整大小 */
+    font-family: Arial, sans-serif; /* 设置字体，与页面其他部分保持一致 */
+    color: #333; /* 设置文字颜色 */
+    background-color: #f9f9f9; /* 设置背景颜色 */
+}
+
+textarea:focus {
+    border-color: #5cb85c; /* 当聚焦时改变边框颜色 */
+    outline: none; /* 移除聚焦时的轮廓线 */
+    box-shadow: 0 0 5px rgba(76, 174, 76, 0.5); /* 当聚焦时添加外阴影 */
 }
 
 button {
     display: block;
     width: 100%;
-    padding: 10px;
-    background-color: #5cb85c;
-    color: white;
+    padding: 8px;
     border: none;
+    border-radius: 15px; /* 增大圆角 */
+    background-image: linear-gradient(to right, #5cb85c, #4cae4c); /* 设置背景渐变色 */
+    color: white;
+    font-size: 1.1em; /* 增加字体大小 */
     cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 添加阴影效果 */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* 添加过渡效果 */
 }
 
 button:hover {
-    background-color: #4cae4c;
+    background-image: linear-gradient(to right, #4cae4c, #5cb85c); /* 鼠标悬停时反转渐变色 */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* 鼠标悬停时增大阴影 */
+}
+
+button:active {
+    background-image: linear-gradient(to right, #3e9c40, #4cae4c); /* 按钮按下时改变渐变色 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* 按钮按下时减小阴影 */
+    transform: translateY(2px); /* 按钮按下时轻微下移 */
 }
 
 select {
     width: 100%;
-    padding: 10px;
+    padding: 10px 15px; /* 增加内边距，使得下拉菜单更加宽敞 */
     margin-bottom: 20px;
+    border: 1px solid #ddd; /* 设置边框样式 */
+    border-radius: 5px; /* 添加圆角边框 */
+    background-color: #fff; /* 设置背景颜色 */
+    color: #333; /* 设置文字颜色 */
+    font-family: Arial, sans-serif; /* 设置字体，与页面其他部分保持一致 */
+    appearance: none; /* 移除默认外观 */
+    -webkit-appearance: none; /* 移除Webkit浏览器默认外观 */
+    -moz-appearance: none; /* 移除Mozilla浏览器默认外观 */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* 添加过渡效果 */
+}
+
+select:focus {
+    border-color: #5cb85c; /* 当聚焦时改变边框颜色 */
+    outline: none; /* 移除聚焦时的轮廓线 */
+    box-shadow: 0 0 5px rgba(76, 174, 76, 0.5); /* 当聚焦时添加外阴影 */
+}
+
+/* 移除默认箭头 */
+select::-ms-expand {
+    display: none; /* 对于IE10及以下版本 */
+}
+
+select:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 #000; /* 对于Firefox，隐藏聚焦时的默认外观 */
+}
+
+/* 自定义箭头 */
+select {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16"><path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/></svg>'); /* 使用SVG箭头 */
+    background-repeat: no-repeat;
+    background-position: right 10px center; /* 定位箭头 */
+    background-size: 12px;
 }
 
 ul {
     list-style: none;
     padding: 0;
+    margin: 0;
+    background-color: #f9f9f9;
+    border-radius: 5px; /* 添加圆角边框 */
 }
 
 li {
-    background-color: #f9f9f9;
+    background-color: #fff;
     border: 1px solid #ddd;
     margin-bottom: 10px;
-    padding: 10px;
+    padding: 15px;
+    border-radius: 3px; /* 添加圆角边框 */
+    transition: background-color 0.3s ease; /* 添加背景颜色变化的过渡效果 */
+}
+
+li:hover {
+    background-color: #f0f0f0; /* 添加悬停背景色 */
+    cursor: pointer; /* 改变鼠标样式为指针 */
 }
 
 /* 媒体查询 */
@@ -100,22 +191,47 @@ input[type="password"] {
     box-sizing: border-box; /* 确保padding不会影响整体宽度 */
 }
 
-/* 时间选择器样式 */
 input[type="date"] {
     width: 100%;
-    padding: 10px;
+    padding: 10px 3px; /* 增加内边距，使得输入框更加宽敞 */
     margin-top: 10px;
     margin-bottom: 10px;
-    border: 1px solid #ddd;
-    box-sizing: border-box; /* 确保padding不会影响整体宽度 */
-    background-color: #fff;
-    color: #333;
-    font-family: Arial, sans-serif;
+    border: 1px solid #ddd; /* 设置边框样式 */
+    border-radius: 5px; /* 添加圆角边框 */
+    background-color: #fff; /* 设置背景颜色 */
+    color: #333; /* 设置文字颜色 */
+    font-family: Arial, sans-serif; /* 设置字体，与页面其他部分保持一致 */
+    appearance: none; /* 移除默认外观 */
+    -webkit-appearance: none; /* 移除Webkit浏览器默认外观 */
+    -moz-appearance: none; /* 移除Mozilla浏览器默认外观 */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* 添加过渡效果 */
 }
 
 input[type="date"]:focus {
-    border-color: #5cb85c;
+    border-color: #5cb85c; /* 当聚焦时改变边框颜色 */
     outline: none; /* 移除聚焦时的轮廓线 */
+    box-shadow: 0 0 5px rgba(76, 174, 76, 0.5); /* 当聚焦时添加外阴影 */
+}
+
+/* 自定义箭头 */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    color: #5cb85c; /* 设置Webkit浏览器中的箭头颜色 */
+    opacity: 0.8; /* 设置箭头的透明度 */
+    cursor: pointer;
+}
+
+input[type="date"]::-webkit-clear-button {
+    display: none; /* 移除Webkit浏览器中的清除按钮 */
+}
+
+/* 对于Firefox，使用伪元素来隐藏默认箭头 */
+input[type="date"]::-moz-calendar-arrow {
+    display: none;
+}
+
+/* 对于IE，使用伪元素来隐藏默认箭头 */
+input[type="date"]::-ms-clear {
+    display: none;
 }
 
 /* 优化表单样式 */
@@ -131,4 +247,65 @@ input[type="date"]:focus {
 
 #export-notes-form button {
     margin-top: 10px;
+}
+
+.date-inputs {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-group {
+    width: 48%; /* 使得两个表单项并排显示，并留有间隙 */
+}
+
+@media (max-width: 480px) {
+    .date-inputs {
+        flex-direction: column;
+    }
+
+    .form-group {
+        width: 100%; /* 在小屏幕上堆叠显示 */
+    }
+}
+.note-filters {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px; /* 添加底部外边距，与其他内容保持一致 */
+}
+
+.note-filters select {
+    width: auto; /* 设置宽度为自动，以适应内容 */
+    margin-right: 10px; /* 添加右侧外边距，创建间隔 */
+}
+
+/* 最后一个select不添加右边距 */
+.note-filters select:last-child {
+    margin-right: 0;
+}
+
+/* 响应式设计，针对小屏幕调整样式 */
+@media (max-width: 480px) {
+    .note-filters {
+        flex-direction: column;
+    }
+
+    .note-filters select {
+        width: 100%; /* 在小屏幕上，下拉菜单占满整个容器宽度 */
+        margin-right: 0;
+        margin-bottom: 10px; /* 添加底部外边距，以便堆叠显示 */
+    }
+}
+
+/* 由于已经定义了.date-inputs和.form-group样式，我们只需要确保它们适用于查看笔记部分 */
+.date-inputs {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px; /* 保持与其他部分的一致性 */
+}
+
+/* 确保在移动设备上堆叠显示 */
+@media (max-width: 480px) {
+    .date-inputs {
+        flex-direction: column;
+    }
 }

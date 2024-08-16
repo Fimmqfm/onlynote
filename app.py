@@ -186,7 +186,7 @@ def export_notes():
     
     si = StringIO()
     cw = csv.writer(si)
-    cw.writerow(['ID', 'Time', 'Contact'])  # 写入表头
+    cw.writerow(['id', 'time', 'contact', 'type'])  # 写入表头
     for row in rows:
         cw.writerow(row)  # 写入数据
     
