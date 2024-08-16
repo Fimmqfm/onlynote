@@ -11,7 +11,7 @@ function fetchNotes() {
             notesList.innerHTML = ''; // 清空列表
             data.forEach(note => {
                 const listItem = document.createElement('li');
-                listItem.textContent = `时间: ${note.time}, 类型: ${note.type === 0 ? '笔记' : '杂物堆'}, 内容: ${note.contact}`;
+                listItem.innerHTML = `时间: ${note.time}, 类型:${note.type === 0 ? '笔记' : '杂物堆'}<br>内容: ${note.contact}`; // 使用<br>标签进行换行
                 notesList.appendChild(listItem);
             });
         })
