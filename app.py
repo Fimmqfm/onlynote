@@ -7,6 +7,7 @@ from io import StringIO
 import os
 import logging
 from logging.handlers import RotatingFileHandler
+from config import *
 
 # 配置日志
 def setup_logging():
@@ -21,10 +22,10 @@ def setup_logging():
     app.logger.setLevel(logging.INFO)
 
 app = Flask(__name__)
-app.secret_key = 'example'  # 设置一个秘密密钥用于加密session
+app.secret_key = app_secret_key
 
-DATABASE = 'contact.db'
-PASSWORD_HASH = generate_password_hash('password')  # 设置您的密码
+DATABASE = app_database
+PASSWORD_HASH = app_password_hash
 BAN_IP_FILE = 'banip.txt'
 
 # 存储IP地址和尝试次数的字典
@@ -203,4 +204,4 @@ def export_notes():
 if __name__ == '__main__':
     create_table()  # 首次运行创建表
     setup_logging()  # 配置日志
-    app.run(host='localhost', port=8080, debug=False)
+    app.run(host=app_host, port=app_port, debug=False)

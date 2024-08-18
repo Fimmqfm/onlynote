@@ -6,7 +6,7 @@
 
 ## 如何开始
 
-1. 拥有python3.x
+1. 安装python3.x
 2. 终端运行pip install -r requirements.txt以安装依赖
-3. 修改app.py中的密钥、密码、host和端口
+3. 修改config.py中的密钥、密码、host和端口
 4. 运行app.py
