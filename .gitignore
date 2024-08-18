@@ -1,0 +1,6 @@
+.DS_Store
+contact.db
+app.log
+config.py
+.idea/
+__pycache__/

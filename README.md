@@ -8,5 +8,6 @@
 
 1. 安装python3.x
 2. 终端运行pip install -r requirements.txt以安装依赖
-3. 修改config.py中的密钥、密码、host和端口
-4. 运行app.py
+3. 将config_example.py改名为config.py
+4. 修改config.py中的密钥、密码、host和端口
+5. 运行app.py
