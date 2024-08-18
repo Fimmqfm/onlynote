@@ -11,12 +11,15 @@ function fetchNotes() {
             notesList.innerHTML = ''; // 清空列表
             data.forEach(note => {
                 const listItem = document.createElement('li');
-                listItem.innerHTML = `时间: ${note.time}, 类型:${note.type === 0 ? '笔记' : '杂物堆'}<br>内容: ${note.contact}`; // 使用<br>标签进行换行
+                // 使用.replace()方法将文本中的\n替换为<br>
+                const contentWithBreaks = note.contact.replace(/\n/g, '<br>');
+                listItem.innerHTML = `时间: ${note.time}, 类型:${note.type === 0 ? '笔记' : '杂物堆'}<br>${contentWithBreaks}`;
                 notesList.appendChild(listItem);
             });
         })
         .catch(error => console.error('Error:', error));
 }
+
 
 // 页面加载时获取笔记列表
 document.addEventListener('DOMContentLoaded', fetchNotes);
